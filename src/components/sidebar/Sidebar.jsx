@@ -1,6 +1,6 @@
 import { RssFeed, Chat, PlayCircleFilledOutlined, Group, Bookmark,HelpOutline, WorkOutline, Event, School } from '@material-ui/icons'
 import { Users } from '../../dummyData'
-
+import Image from '../Image'
 import './sidebar.css'
 
 export default function Sidebar() {
@@ -50,7 +50,7 @@ export default function Sidebar() {
         <ul className="sidebar-friend-list">
           {Users.map(user => (
           <li className="sidebar-friend">
-            <img src={user.profilePicture} alt="" className="sidebar-friend-img" />
+            <Image src={user.profilePicture} alt="" className="sidebar-friend-img" />
             <span className="sidebar-friend-name">{user.username}</span>
           </li>
           ))}

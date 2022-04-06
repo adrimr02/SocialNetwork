@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { MoreVert } from '@material-ui/icons'
 
+import Image from '../Image'
+
 import { Users } from '../../dummyData'
 
 import './post.css'
@@ -20,7 +22,7 @@ export default function Post({ post }) {
       <div className="post-wrapper">
         <div className="post-top">
           <div className="post-top-left">
-            <img className="post-profile-img" src={user.profilePicture} alt="" />
+            <Image className="post-profile-img" src={user.profilePicture} alt="" />
             <span className="post-username">{user.username}</span>
             <span className="post-date">{post.date}</span>
           </div>
@@ -30,11 +32,11 @@ export default function Post({ post }) {
         </div>
         <div className="post-center">
           <span className="post-text">{post?.desc}</span>
-          <img className="post-img" src={post?.photo} alt="" />
+          <Image className="post-img" src={post?.photo} alt="" />
         </div>
         <div className="post-bottom">
           <div className="post-bottom-left">
-            <img className="post-heart-icon" src="/assets/heart.png" alt="" onClick={likeHandle} />
+            <Image className="post-heart-icon" src="heart.png" alt="" onClick={likeHandle} />
             <span className="post-heart-counter">{like} people like it</span>
           </div>
           <div className="post-bottom-right">

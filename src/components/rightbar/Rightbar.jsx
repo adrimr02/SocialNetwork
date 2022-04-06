@@ -1,5 +1,6 @@
-import { LocationCity, Cake, CakeOutlined } from '@material-ui/icons'
+import { LocationCity, CakeOutlined } from '@material-ui/icons'
 import { Users } from '../../dummyData'
+import Image from '../Image'
 import './rightbar.css'
 
 export default function Rightbar({ profile }) {
@@ -23,27 +24,27 @@ export default function Rightbar({ profile }) {
         <h4 className="rightbar-title">User friends</h4>
         <div className="rightbar-following-list">
           <div className="rightbar-following">
-            <img src="/assets/person/3.jpeg" alt="" className="rightbar-following-img" />
+            <Image src="person/3.jpeg" alt="" className="rightbar-following-img" />
             <span className="rightbar-following-name">Claudia</span>
           </div>
           <div className="rightbar-following">
-            <img src="/assets/person/3.jpeg" alt="" className="rightbar-following-img" />
+            <Image src="person/3.jpeg" alt="" className="rightbar-following-img" />
             <span className="rightbar-following-name">Claudia</span>
           </div>
           <div className="rightbar-following">
-            <img src="/assets/person/3.jpeg" alt="" className="rightbar-following-img" />
+            <Image src="person/3.jpeg" alt="" className="rightbar-following-img" />
             <span className="rightbar-following-name">Claudia</span>
           </div>
           <div className="rightbar-following">
-            <img src="/assets/person/3.jpeg" alt="" className="rightbar-following-img" />
+            <Image src="person/3.jpeg" alt="" className="rightbar-following-img" />
             <span className="rightbar-following-name">Claudia</span>
           </div>
           <div className="rightbar-following">
-            <img src="/assets/person/3.jpeg" alt="" className="rightbar-following-img" />
+            <Image src="person/3.jpeg" alt="" className="rightbar-following-img" />
             <span className="rightbar-following-name">Claudia</span>
           </div>
           <div className="rightbar-following">
-            <img src="/assets/person/3.jpeg" alt="" className="rightbar-following-img" />
+            <Image src="person/3.jpeg" alt="" className="rightbar-following-img" />
             <span className="rightbar-following-name">Claudia</span>
           </div>
         </div>
@@ -55,19 +56,19 @@ export default function Rightbar({ profile }) {
     return(
       <>
         <div className="birthday-container">
-          <img src="/assets/gift.png" alt="" className="birthday-img" />
+          <Image src="gift.png" alt="" className="birthday-img" />
           <span className="birthday-text">
             {" "}
             <b>Robert</b> and <b>3 other friends</b> have a birthday today.
           </span>
         </div>
-        <img className="rightbar-ad" src="/assets/ad.png" alt="" />
+        <Image className="rightbar-ad" src="ad.png" alt="" />
         <h4 className="rightbar-title">Online Friends</h4>
         <ul className="rightbar-friend-list">
           {Users.map(user => (
           <li key={user.id} className="rightbar-friend">
             <div className="rightbar-profile-img-container">
-              <img className="rightbar-profile-img" src={user.profilePicture} alt="" />
+              <Image className="rightbar-profile-img" src={user.profilePicture} alt="" />
               <span className="rightbar-online"></span>
             </div>
             <span className="rightbar-username">{user.username}</span>
@@ -81,7 +82,7 @@ export default function Rightbar({ profile }) {
   return (
     <div className="rightbar">
       <div className="rightbar-wrapper">
-        <ProfileRightbar/>
+        { profile ? <ProfileRightbar/> : <HomeRightbar />}
       </div>
     </div>
   )
