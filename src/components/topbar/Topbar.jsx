@@ -1,4 +1,5 @@
 import { Search, Person, Chat, Notifications } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
 
 import Image from '../Image'
 
@@ -8,7 +9,9 @@ export default function Topbar() {
   return (
     <div className="topbar-container">
       <div className="topbar-left">
-        <span className="logo">NodeBook</span>
+        <Link to="/" style={{textDecoration:"none"}}>
+          <span className="logo">NodeBook</span>
+        </Link>
       </div>
       <div className="topbar-center">
         <div className="searchbar">
