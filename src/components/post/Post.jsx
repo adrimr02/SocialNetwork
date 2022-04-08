@@ -31,7 +31,7 @@ export default function Post({ post }) {
       <div className="post-wrapper">
         <div className="post-top">
           <div className="post-top-left">
-            <Link to={`/profile/${user._id}`} style={{textDecoration:'none', alignItems: 'center', color: 'InfoText'}}>
+            <Link to={`/profile/${user._id}`} style={{display: 'flex', alignItems: 'center', textDecoration:'none', color: 'InfoText'}}>
               <Image className="post-profile-img" src={user.profilePic || "person/noAvatar.png"} alt="" />
               <span className="post-username">{user.username}</span>
             </Link>
