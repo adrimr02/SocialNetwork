@@ -1,15 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MoreVert } from '@material-ui/icons'
+import axios from 'axios'
+import { format } from 'timeago.js'
+import { Link } from 'react-router-dom'
 
 import Image from '../Image'
-
-import { Users } from '../../dummyData'
 
 import './post.css'
 
 export default function Post({ post }) {
-  const user = Users.find(user=>user.id===post.userId)
-  const [like, setLike] = useState(post.like)
+  const [like, setLike] = useState(post.likes.length)
+  const [user, setUser] = useState({})
   const [isLiked, setIsLiked] = useState(false)
 
   const likeHandle = () => {
@@ -17,14 +18,24 @@ export default function Post({ post }) {
     setIsLiked(!isLiked)
   }
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const res = await axios.get(`users/${ post.userId }`)
+      setUser(res.data.user)
+    }
+    fetchUsers()
+  }, [post.userId])
+
   return (
     <div className="post">
       <div className="post-wrapper">
         <div className="post-top">
           <div className="post-top-left">
-            <Image className="post-profile-img" src={user.profilePicture} alt="" />
-            <span className="post-username">{user.username}</span>
-            <span className="post-date">{post.date}</span>
+            <Link to={`/profile/${user._id}`} style={{textDecoration:'none', alignItems: 'center', color: 'InfoText'}}>
+              <Image className="post-profile-img" src={user.profilePic || "person/noAvatar.png"} alt="" />
+              <span className="post-username">{user.username}</span>
+            </Link>
+            <span className="post-date">{format(post.createdAt)}</span>
           </div>
           <div className="post-top-right">
             <MoreVert className="post-options-icon"/>
@@ -32,7 +43,9 @@ export default function Post({ post }) {
         </div>
         <div className="post-center">
           <span className="post-text">{post?.desc}</span>
-          <Image className="post-img" src={post?.photo} alt="" />
+          {
+            post.img ? <Image className="post-img" src={post?.img} alt="" /> : null
+          }
         </div>
         <div className="post-bottom">
           <div className="post-bottom-left">

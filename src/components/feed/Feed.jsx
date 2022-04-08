@@ -1,22 +1,28 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 import Share from '../share/Share'
 import Post from '../post/Post'
 
 import './feed.css'
-import { useEffect, useState } from 'react'
 
 export default function Feed() {
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    console.log()
-  })
-  // https://youtu.be/pFHyZvVxce0?list=PLj-4DlPRT48lXaz5YLvbLC38m25W9Kmqy&t=1264
+    const fetchPosts = async () => {
+      const res = await axios.get("posts/timeline/61a7dc92ee69063669730fff")
+      setPosts(res.data)
+    }
+    fetchPosts()
+  }, [])
+  https://youtu.be/pFHyZvVxce0?t=2513
   return (
     <div className="feed">
       <div className="feed-wrapper">
         <Share />
         {posts.map(post => (
-          <Post key={post.id} post={post}/>
+          <Post key={post._id} post={post}/>
         ))}
       </div>
     </div>
