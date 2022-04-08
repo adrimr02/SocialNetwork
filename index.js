@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 require('./db');
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 8080);
 
 app.use(express.json());
 app.use(helmet());
@@ -25,7 +25,5 @@ app.get('/', (req, res) => {
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
-
-//https://youtu.be/ldGl6L4Vktk?list=PLj-4DlPRT48lXaz5YLvbLC38m25W9Kmqy&t=1717
 
 app.listen(app.get('port'), () => console.log(`Server running on port ${app.get('port')}`));
