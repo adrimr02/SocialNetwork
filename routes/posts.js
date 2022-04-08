@@ -5,12 +5,14 @@ const User = require('../models/User');
 
 //Create a post
 router.post('/', async (req, res) => {
+  console.log(req.body);
   const newPost = new Post(req.body);
   try {
     const savedPost = await newPost.save();
     res.status(200).json({ post: savedPost, message: 'Post created' });
   } catch(err) {
-
+    console.log(err)
+    res.status(500).json({ error: err});
   }
 });
 
@@ -18,10 +20,10 @@ router.post('/', async (req, res) => {
 router.get('/timeline/:userid', async (req, res) => {
   let postArray = []
   try {
-    const currentUser = await User.findById(req.params.userId);
+    const currentUser = await User.findById(req.params.userid);
     const userPosts = await Post.find({userId: currentUser._id});
     const friendPosts = await Promise.all(
-      currentUser.followings.map((friendId) => {
+      currentUser.following.map((friendId) => {
         Post.find({ userId: friendId });
       })
     );

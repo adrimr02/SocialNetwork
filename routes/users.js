@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 //Get user
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const user = User.findById(req.params.id);
+    const user = await User.findById(req.params.id);
     const { password, updatedAt, ...other} = user._doc;
     res.status(200).json({ user: other });
   } catch(err) {
