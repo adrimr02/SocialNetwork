@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { MoreVert } from '@material-ui/icons'
 import axios from 'axios'
 import { format } from 'timeago.js'
 import { Link } from 'react-router-dom'
 
+import { AuthContext } from '../../context/AuthContext'
 import Image from '../Image'
 
 import './post.css'
@@ -12,15 +13,27 @@ export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length)
   const [user, setUser] = useState({})
   const [isLiked, setIsLiked] = useState(false)
+  const { user: currentUser } = useContext(AuthContext)
 
   const likeHandle = () => {
+
+    try {
+      axios.put(`/posts/${post._id}/like`, { userId: currentUser._id })
+    } catch (err) {
+      console.error(err)
+    }
+
     setLike(isLiked ? like-1 : like+1)
     setIsLiked(!isLiked)
   }
 
   useEffect(() => {
+    setIsLiked(post.likes.includes(currentUser._id))
+  }, [currentUser._id, post.likes])
+
+  useEffect(() => {
     const fetchUsers = async () => {
-      const res = await axios.get(`users/${ post.userId }`)
+      const res = await axios.get(`/users?userid=${ post.userId }`)
       setUser(res.data.user)
     }
     fetchUsers()
@@ -31,7 +44,7 @@ export default function Post({ post }) {
       <div className="post-wrapper">
         <div className="post-top">
           <div className="post-top-left">
-            <Link to={`/profile/${user._id}`} style={{display: 'flex', alignItems: 'center', textDecoration:'none', color: 'InfoText'}}>
+            <Link to={`/profile/${user.username}`} style={{display: 'flex', alignItems: 'center', textDecoration:'none', color: 'InfoText'}}>
               <Image className="post-profile-img" src={user.profilePic || "person/noAvatar.png"} alt="" />
               <span className="post-username">{user.username}</span>
             </Link>

@@ -3,24 +3,38 @@ import { Users } from '../../dummyData'
 import Image from '../Image'
 import './rightbar.css'
 
-export default function Rightbar({ profile }) {
+export default function Rightbar({ user }) {
 
   const ProfileRightbar = () => {
     return(
       <>
-        <h4 className="rightbar-title" >User information</h4>
-        <div className="rightbar-info">
-          <div className="rightbar-info-item">
-            <LocationCity className="rightbar-info-icon"/>
-            <span className="rightbar-info-key">Location:</span>
-            <span className="rightbar-info-value">Gijon</span>
-          </div>
-          <div className="rightbar-info-item">
-            <CakeOutlined className="rightbar-info-icon"/>
-            <span className="rightbar-info-key">Birthday:</span>
-            <span className="rightbar-info-value">27/10</span>
-          </div>
-        </div>
+        {
+          user.location || user.birthday ?
+            <>
+              <h4 className="rightbar-title" >User information</h4>
+              <div className="rightbar-info">
+                {
+                  user.location ?
+                    <div className="rightbar-info-item">
+                      <LocationCity className="rightbar-info-icon"/>
+                      <span className="rightbar-info-key">Location:</span>
+                      <span className="rightbar-info-value">Gijon</span>
+                    </div>
+                    : null
+                }
+                {
+                  user.birthday ?
+                    <div className="rightbar-info-item">
+                      <CakeOutlined className="rightbar-info-icon"/>
+                      <span className="rightbar-info-key">Birthday:</span>
+                      <span className="rightbar-info-value">27/10</span>
+                    </div>
+                  : null
+                }
+              </div>
+            </>
+            : null
+        }
         <h4 className="rightbar-title">User friends</h4>
         <div className="rightbar-following-list">
           <div className="rightbar-following">
@@ -82,7 +96,7 @@ export default function Rightbar({ profile }) {
   return (
     <div className="rightbar">
       <div className="rightbar-wrapper">
-        { profile ? <ProfileRightbar/> : <HomeRightbar />}
+        { user ? <ProfileRightbar/> : <HomeRightbar />}
       </div>
     </div>
   )

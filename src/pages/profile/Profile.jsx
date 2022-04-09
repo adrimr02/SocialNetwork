@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 import Feed from '../../components/feed/Feed'
 import Rightbar from '../../components/rightbar/Rightbar'
@@ -10,6 +12,22 @@ import Image from '../../components/Image'
 import  './profile.css'
 
 export default function Profile() {
+
+  const [user, setUser] = useState({})
+
+  const username = useParams().username
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/users?username=${username}`)
+      setUser(res.data.user)
+    }
+
+    fetchUser()
+  }, [username])
+
+  // https://youtu.be/pFHyZvVxce0?t=3283
+  
   return (
     <>
     <Topbar />
@@ -18,17 +36,17 @@ export default function Profile() {
       <div className="profile-right">
         <div className="profile-right-top">
           <div className="profile-cover">
-            <Image src="post/3.jpeg" alt="" className="profile-cover-img" />
-            <Image src="person/7.jpeg" alt="" className="profile-user-img" />
+            <Image src={user.coverPic || "person/noCover.png"} alt="" className="profile-cover-img" />
+            <Image src={user.profilePic || "person/noAvatar.png"} alt="" className="profile-user-img" />
           </div>
           <div className="profile-info">
-            <h4 className="profile-info-name">Nombre</h4>
-            <span className="profile-info-desc">Descripcion</span>
+            <h4 className="profile-info-name">{user.username}</h4>
+            <span className="profile-info-desc">{user.desc}</span>
           </div>
         </div>
         <div className="profile-right-bottom">
-          <Feed profile />
-          <Rightbar profile />
+          <Feed username={username} />
+          <Rightbar user={user} />
         </div>
       </div>
     </div>
