@@ -4,9 +4,16 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 //Get user
-router.get('/:id', async (req, res) => {
+router.get('/', async (req, res) => {
+  const userId = req.query.userid;
+  const username = req.query.username;
   try {
-    const user = await User.findById(req.params.id);
+    let user = {};
+    if (userId)
+      user = await User.findById(userId);
+    else if (username)
+      user = await User.findOne({ username: username })
+
     const { password, updatedAt, ...other} = user._doc;
     res.status(200).json({ user: other });
   } catch(err) {

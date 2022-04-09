@@ -40,7 +40,7 @@ router.get('/profile/:username', async (req, res) => {
   try {
     const currentUser = await User.findOne({ username: req.params.username });
     const userPosts = await Post.find({userId: currentUser._id});
-    res.status(200).json(userPosts.concat(...friendPosts));
+    res.status(200).json(userPosts);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err });
